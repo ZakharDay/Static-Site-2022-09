@@ -80,7 +80,7 @@ module.exports = {
         }
       },
       {
-        test: /\.(ttf|otf)$/i,
+        test: /\.(ttf|otf|woff|woff2)$/i,
         loader: 'file-loader',
         options: {
           name: 'fonts/[name].[ext]'
@@ -100,11 +100,32 @@ module.exports = {
       filename: './index.html'
     }),
 
+    new HtmlWebpackPlugin({
+      template: './src/about.html',
+      filename: './about.html'
+    }),
+
+    // Articles
+    new HtmlWebpackPlugin({
+      template: './src/spaceships.html',
+      filename: './spaceships.html'
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/spaceobjects.html',
+      filename: './spaceobjects.html'
+    }),
+
     // Article
-    // new HtmlWebpackPlugin({
-    //   template: './src/articles/superorganisms/S_Popup.html',
-    //   filename: './superorganisms/S_Popup.html'
-    // }),
+    new HtmlWebpackPlugin({
+      template: './src/spaceships/buran.html',
+      filename: './spaceships/buran.html'
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/spaceobjects/moon.html',
+      filename: './spaceobjects/moon.html'
+    }),
 
     // Partials
     new HtmlWebpackPartialsPlugin([
