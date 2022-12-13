@@ -1,0 +1,134 @@
+body.ui {
+  &.modal {
+    overflow: hidden;
+
+    .postModal {
+      display: flex;
+    }
+  }
+
+  .postModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: space-around;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+
+    .fader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(255, 255, 255, 0.8);
+    }
+
+    .sliderButton,
+    .post {
+      position: relative;
+      z-index: 1;
+    }
+
+    .sliderButton {
+      width: 60px;
+      height: 60px;
+      border-radius: 30px;
+      background: black;
+    }
+
+    .post {
+      position: relative;
+      display: flex;
+      width: 664px;
+      height: 664px;
+      transition: all var(--transitionTiming) ease;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+
+      &.aside {
+        width: 996px;
+
+        .asideButton {
+          left: 1006px;
+        }
+
+        .textContentArea {
+          width: 332px;
+        }
+      }
+
+      .asideButton {
+        position: absolute;
+        left: 674px;
+        width: 60px;
+        height: 60px;
+        border-radius: 30px;
+        background: red;
+        transition: all var(--transitionTiming) ease;
+      }
+
+      .imageSlider {
+        width: 664px;
+        height: 664px;
+        background: black;
+        overflow-x: scroll;
+
+        .rail {
+          display: flex;
+          width: 6640px;
+          height: 664px;
+          transition: all var(--transitionTiming) ease;
+          // transform: translateX(-664px);
+
+          img {
+            width: 664px;
+            height: 664px;
+          }
+        }
+      }
+
+      .textContentArea {
+        width: 0;
+        height: 664px;
+        background: white;
+        overflow: hidden;
+        transition: all var(--transitionTiming) ease;
+
+        .contentWrapper {
+          width: calc(332px + 46px);
+          height: 664px;
+          padding: 14px calc(20px + 46px) 14px 20px;
+          overflow-x: hidden;
+          overflow-y: scroll;
+          line-height: 1.4;
+
+          h2,
+          h3 {
+            font-weight: bold;
+            margin: 10px 0;
+          }
+        }
+      }
+    }
+  }
+
+  .posts {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    // column-gap: 12px;
+    width: 960px;
+    margin: 0 auto;
+    padding: 100px 0;
+
+    .postTeaser {
+      width: 320px;
+      height: 320px;
+
+      img {
+        width: 100%;
+      }
+    }
+  }
+}

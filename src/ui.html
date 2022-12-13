@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>UI</title>
+
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', () => {
+        const postTeasers = document.getElementsByClassName('postTeaser')
+        const modalFader = document.getElementsByClassName('fader')[0]
+        const asideButton = document.getElementsByClassName('asideButton')[0]
+        const sliderButtonLeft = document.querySelector('.sliderButton.left')
+        const sliderButtonRight = document.querySelector('.sliderButton.right')
+        const rail = document.getElementsByClassName('rail')[0]
+        let currentSlide = 0
+
+        function toggleModal() {
+          const body = document.body
+          body.classList.toggle('modal')
+        }
+
+        function toggleAside() {
+          const post = document.getElementsByClassName('post')[0]
+          post.classList.toggle('aside')
+        }
+
+        function slide(direction) {
+          console.log('click')
+          if (direction === 'next') {
+            currentSlide++
+          } else if (direction === 'prev') {
+            currentSlide--
+          }
+
+          console.log(currentSlide)
+
+          rail.style.transform = 'translateX(-' + currentSlide * 664 + 'px)'
+        }
+
+        for (var i = 0; i < postTeasers.length; i++) {
+          postTeasers[i].addEventListener('click', toggleModal)
+        }
+
+        modalFader.addEventListener('click', toggleModal)
+        asideButton.addEventListener('click', toggleAside)
+
+        sliderButtonLeft.addEventListener('click', () => {
+          slide('prev')
+        })
+
+        sliderButtonRight.addEventListener('click', () => {
+          slide('next')
+        })
+      })
+    </script>
+  </head>
+
+  <body class="ui">
+    <section class="postModal">
+      <div class="fader"></div>
+
+      <div class="sliderButton left"></div>
+
+      <div class="post">
+        <div class="asideButton"></div>
+
+        <div class="imageSlider">
+          <div class="rail">
+            <img src="./images/posts/01/teaser.png" />
+            <img src="./images/posts/01/teaser.png" />
+            <img src="./images/posts/01/teaser.png" />
+            <img src="./images/posts/01/teaser.png" />
+            <img src="./images/posts/01/teaser.png" />
+            <img src="./images/posts/01/teaser.png" />
+            <img src="./images/posts/01/teaser.png" />
+            <img src="./images/posts/01/teaser.png" />
+            <img src="./images/posts/01/teaser.png" />
+            <img src="./images/posts/01/teaser.png" />
+          </div>
+        </div>
+
+        <aside class="textContentArea">
+          <div class="contentWrapper">
+            <h2>Название</h2>
+            <h3>
+              Дизайн информационной системы: идея и устройство информационной
+              системы
+            </h3>
+
+            <h2>Описание</h2>
+            <p>
+              Студенты разрабатывают концепцию информационной системы, изучают
+              целевую аудиторию и верстают одностраничный сайт с описанием
+              проекта. Описывают объектную структуру проекта. Создают
+              интерактивный прототип медиа-сервиса в Figma для формирования
+              видения развития проекта. Изучают методология JTBD и учатся
+              создавать Job Stories и User Stories.
+            </p>
+
+            <h2>Итоговый проект</h2>
+            <p>
+              Концепция сайта (информационной системы), макеты первичных
+              артефактов, интерактивный прототип по методологии JTBD, схема
+              структуры сайта.
+            </p>
+
+            <h2>Требования к промежуточному проекту</h2>
+            <p>
+              Презентация концепции, механики и исследования целевой аудитории
+              сайта
+            </p>
+
+            <h2>Описание</h2>
+            <p>
+              Студенты разрабатывают концепцию информационной системы, изучают
+              целевую аудиторию и верстают одностраничный сайт с описанием
+              проекта. Описывают объектную структуру проекта. Создают
+              интерактивный прототип медиа-сервиса в Figma для формирования
+              видения развития проекта. Изучают методология JTBD и учатся
+              создавать Job Stories и User Stories.
+            </p>
+
+            <h2>Итоговый проект</h2>
+            <p>
+              Концепция сайта (информационной системы), макеты первичных
+              артефактов, интерактивный прототип по методологии JTBD, схема
+              структуры сайта.
+            </p>
+
+            <h2>Требования к промежуточному проекту</h2>
+            <p>
+              Презентация концепции, механики и исследования целевой аудитории
+              сайта
+            </p>
+          </div>
+        </aside>
+      </div>
+
+      <div class="sliderButton right"></div>
+    </section>
+
+    <section class="posts">
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+
+      <div class="postTeaser">
+        <img src="./images/posts/01/teaser.png" />
+      </div>
+    </section>
+  </body>
+</html>
