@@ -1,11 +1,22 @@
 import './adcgame.css'
 
-const messages = [
-  'Ghbdtn! Rfr ltkf?',
-  'Ой',
-  'Привет! Как дела?',
-  'Ладно, знаешь меня?'
+const messageGroups = [
+  ['Ghbdtn! Rfr ltkf?', 'Ой', 'Привет! Как дела?', 'Ладно, знаешь меня?'],
+  [
+    'Хей! приветствую тебя из глубин интернета',
+    'Ты ведь не знаешь кто я, верно?'
+  ],
+  [
+    'О, как хорошо, что ты заглянул',
+    'Кажется, мы уже встречались?',
+    'На вечеринке... Ну этого... того '
+  ],
+  ['ЙОУ', 'ДИП!', 'РЭП']
 ]
+
+function sample(array) {
+  return array[Math.floor(Math.random() * array.length)]
+}
 
 function showMessage(message) {
   const element = document.createElement('div')
@@ -15,6 +26,7 @@ function showMessage(message) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  const messages = sample(messageGroups)
   let timeout = 2000
 
   messages.forEach((message, i) => {
