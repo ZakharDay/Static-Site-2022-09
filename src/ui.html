@@ -3,56 +3,6 @@
   <head>
     <meta charset="utf-8" />
     <title>UI</title>
-
-    <script type="text/javascript">
-      document.addEventListener('DOMContentLoaded', () => {
-        const postTeasers = document.getElementsByClassName('postTeaser')
-        const modalFader = document.getElementsByClassName('fader')[0]
-        const asideButton = document.getElementsByClassName('asideButton')[0]
-        const sliderButtonLeft = document.querySelector('.sliderButton.left')
-        const sliderButtonRight = document.querySelector('.sliderButton.right')
-        const rail = document.getElementsByClassName('rail')[0]
-        let currentSlide = 0
-
-        function toggleModal() {
-          const body = document.body
-          body.classList.toggle('modal')
-        }
-
-        function toggleAside() {
-          const post = document.getElementsByClassName('post')[0]
-          post.classList.toggle('aside')
-        }
-
-        function slide(direction) {
-          console.log('click')
-          if (direction === 'next') {
-            currentSlide++
-          } else if (direction === 'prev') {
-            currentSlide--
-          }
-
-          console.log(currentSlide)
-
-          rail.style.transform = 'translateX(-' + currentSlide * 664 + 'px)'
-        }
-
-        for (var i = 0; i < postTeasers.length; i++) {
-          postTeasers[i].addEventListener('click', toggleModal)
-        }
-
-        modalFader.addEventListener('click', toggleModal)
-        asideButton.addEventListener('click', toggleAside)
-
-        sliderButtonLeft.addEventListener('click', () => {
-          slide('prev')
-        })
-
-        sliderButtonRight.addEventListener('click', () => {
-          slide('next')
-        })
-      })
-    </script>
   </head>
 
   <body class="ui">
