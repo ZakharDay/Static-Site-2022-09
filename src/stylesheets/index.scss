@@ -201,4 +201,25 @@ body.index {
   .A_ContentItemTitle {
     font-weight: bold;
   }
+
+  .O_Search {
+    width: 300px;
+    border: 1px solid black;
+  }
+
+  .A_SearchInput {
+    width: 300px;
+    height: 44px;
+    min-height: 44px;
+    padding: 10px 44px 10px 10px;
+    background-color: transparent;
+    border: 0px solid;
+
+    &:focus {
+      border-color: inherit;
+      -webkit-box-shadow: none;
+      box-shadow: none;
+      outline: none;
+    }
+  }
 }

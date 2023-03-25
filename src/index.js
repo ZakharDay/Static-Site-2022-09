@@ -1,10 +1,9 @@
 import './index.css'
 import Cookies from 'js-cookie'
+import { generateHash } from './utilities'
 
-const selectOptions = ['announcements']
-
+const selectOptions = []
 const multiSelectOptions = []
-
 const content = []
 
 function transformToLowercase(array) {
@@ -87,7 +86,74 @@ function createContentCard(contentItemData) {
   return contentItem
 }
 
+function renderCardsByIds(container, ids) {
+  ids = [...new Set(ids)]
+
+  ids.forEach((id) => {
+    content.forEach((item) => {
+      if (item.id === id) {
+        container.appendChild(createContentCard(item))
+      }
+    })
+  })
+}
+
 function rerenderContent() {
+  const contentItemsContainer = document.querySelector('.S_Content')
+  const searchInput = document.querySelector('.A_SearchInput')
+  const requestText = searchInput.value.toLowerCase()
+  const selectedTags = []
+
+  multiSelectOptions.forEach((item) => {
+    if (item.active) {
+      selectedTags.push(item.text)
+    }
+  })
+
+  contentItemsContainer.innerHTML = ''
+
+  let contentItemIds = []
+
+  content.forEach((contentItem) => {
+    const nbspRegex = /[\u202F\u00A0]/gm
+    const punctuationRegex = /[.,\/#!$%\^&\*;:{}=\-_`~()]/gm
+    let { title, description } = contentItem
+
+    title = title.toLowerCase().replaceAll(nbspRegex, ' ')
+    title = title.replaceAll(punctuationRegex, '')
+    description = description.toLowerCase().replaceAll(nbspRegex, ' ')
+    description = description.replaceAll(punctuationRegex, '')
+
+    if (requestText.length >= 3 && selectedTags.length === 0) {
+      if (title.includes(requestText) || description.includes(requestText)) {
+        contentItemIds.push(contentItem.id)
+      }
+    } else if (requestText.length < 3 && selectedTags.length > 0) {
+      selectedTags.forEach((tag) => {
+        if (transformToLowercase(contentItem.tags).includes(tag)) {
+          contentItemIds.push(contentItem.id)
+        }
+      })
+    } else if (requestText.length >= 3 && selectedTags.length >= 0) {
+      selectedTags.forEach((tag) => {
+        if (transformToLowercase(contentItem.tags).includes(tag)) {
+          if (
+            title.includes(requestText) ||
+            description.includes(requestText)
+          ) {
+            contentItemIds.push(contentItem.id)
+          }
+        }
+      })
+    } else {
+      contentItemIds.push(contentItem.id)
+    }
+  })
+
+  renderCardsByIds(contentItemsContainer, contentItemIds)
+}
+
+function rerenderFilteredContent() {
   const contentItemsContainer = document.querySelector('.S_Content')
   const selectedTags = []
 
@@ -101,22 +167,64 @@ function rerenderContent() {
 
   contentItemsContainer.innerHTML = ''
 
-  for (let i = 0; i < content.length; i++) {
-    const contentItem = content[i]
+  // content.forEach((contentItem) => {
+  //   if (selectedTags.length > 0) {
+  //     selectedTags.forEach((tag) => {
+  //       if (transformToLowercase(contentItem.tags).includes(tag)) {
+  //         console.log('true')
+  //         contentItemsContainer.appendChild(createContentCard(contentItem))
+  //       } else {
+  //         console.log('false')
+  //       }
+  //     })
+  //   } else {
+  //     contentItemsContainer.appendChild(createContentCard(contentItem))
+  //   }
+  // })
 
+  let contentItemIds = []
+
+  content.forEach((contentItem) => {
     if (selectedTags.length > 0) {
       selectedTags.forEach((tag) => {
         if (transformToLowercase(contentItem.tags).includes(tag)) {
-          console.log('true')
-          contentItemsContainer.appendChild(createContentCard(contentItem))
-        } else {
-          console.log('false')
+          contentItemIds.push(contentItem.id)
         }
       })
     } else {
-      contentItemsContainer.appendChild(createContentCard(contentItem))
+      contentItemIds.push(contentItem.id)
     }
-  }
+  })
+
+  renderCardsByIds(contentItemsContainer, contentItemIds)
+}
+
+function rerenderSearchedContent(requestText) {
+  const contentItemsContainer = document.querySelector('.S_Content')
+  contentItemsContainer.innerHTML = ''
+
+  let contentItemIds = []
+
+  content.forEach((contentItem) => {
+    const nbspRegex = /[\u202F\u00A0]/gm
+    const punctuationRegex = /[.,\/#!$%\^&\*;:{}=\-_`~()]/gm
+    let { title, description } = contentItem
+
+    title = title.replaceAll(nbspRegex, ' ')
+    title = title.replaceAll(punctuationRegex, '')
+    description = description.replaceAll(nbspRegex, ' ')
+    description = description.replaceAll(punctuationRegex, '')
+
+    if (requestText.length >= 3) {
+      if (title.includes(requestText) || description.includes(requestText)) {
+        contentItemIds.push(contentItem.id)
+      }
+    } else {
+      contentItemIds.push(contentItem.id)
+    }
+  })
+
+  renderCardsByIds(contentItemsContainer, contentItemIds)
 }
 
 // function getContentItemDataTags() {
@@ -286,6 +394,56 @@ function initSelect() {
   const selectInput = document.querySelector('.A_SelectInput')
   const dropdownButton = document.querySelector('.A_SelectDropdownButton')
 
+  optionListElement.innerHTML = ''
+
+  getContentItemDataTags().forEach((item) => {
+    selectOptions.push(item)
+  })
+
+  fillSelect(selectOptions)
+
+  dropdownButton.addEventListener('click', () => {
+    selectElement.classList.toggle('focus')
+  })
+
+  selectInput.addEventListener('focus', () => {
+    selectElement.classList.add('focus')
+  })
+
+  selectInput.addEventListener('input', (e) => {
+    const { value } = e.target
+
+    const filteredSelectOptions = []
+
+    selectOptions.forEach((option) => {
+      if (value.length > 0) {
+        if (option.startsWith(value)) {
+          filteredSelectOptions.push(option)
+        }
+      } else {
+        filteredSelectOptions.push(option)
+      }
+    })
+
+    optionListElement.innerHTML = ''
+    fillSelect(filteredSelectOptions)
+  })
+
+  document.body.addEventListener('click', (e) => {
+    if (
+      !e.target.classList.contains('A_SelectInput') &&
+      !e.target.classList.contains('A_SelectDropdownButton')
+    ) {
+      selectElement.classList.remove('focus')
+    }
+  })
+}
+
+function fillSelect(selectOptions) {
+  const selectElement = document.querySelector('.O_Select')
+  const optionListElement = document.querySelector('.C_SelectOptionList')
+  const selectInput = document.querySelector('.A_SelectInput')
+
   selectOptions.forEach((option) => {
     const listItem = document.createElement('div')
     listItem.classList.add('A_SelectOptionListItem')
@@ -309,23 +467,6 @@ function initSelect() {
     })
 
     optionListElement.appendChild(listItem)
-  })
-
-  dropdownButton.addEventListener('click', () => {
-    selectElement.classList.toggle('focus')
-  })
-
-  selectInput.addEventListener('focus', () => {
-    selectElement.classList.add('focus')
-  })
-
-  document.body.addEventListener('click', (e) => {
-    if (
-      !e.target.classList.contains('A_SelectInput') &&
-      !e.target.classList.contains('A_SelectDropdownButton')
-    ) {
-      selectElement.classList.remove('focus')
-    }
   })
 }
 
@@ -379,6 +520,7 @@ function initFilters() {
     ).innerText
 
     const contentItemData = {
+      id: generateHash(),
       tags: contentItemTags,
       image: contentItemImage,
       title: contentItemTitle,
@@ -391,15 +533,24 @@ function initFilters() {
   console.log('content', content)
 }
 
+function initSearch() {
+  const searchInput = document.querySelector('.A_SearchInput')
+
+  searchInput.addEventListener('input', () => {
+    rerenderContent()
+  })
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   if (document.body.classList.contains('index')) {
     initModal()
-    initSelect()
-
-    // getContentItemDataTags()
-    // initMultiSelect()
 
     initFilters()
+
     initMultiSelect()
+
+    initSearch()
+
+    initSelect()
   }
 })
