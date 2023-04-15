@@ -1,5 +1,25 @@
 import './search.css'
-import { content } from './search_data.js'
+import { getPostTeasers } from './search_data.js'
+
+let content
+
+function getSearchRequest() {
+  const url = new URL(window.location.href)
+  const searchParams = new URLSearchParams(url.search)
+
+  if (searchParams.has('request')) {
+    return searchParams.get('request')
+  }
+}
+
+function setSearchRequest(requestText) {
+  const url = getPathFromUrl(window.location.href)
+  window.location.href = url + '?request=' + requestText
+}
+
+function getPathFromUrl(url) {
+  return url.split('?')[0]
+}
 
 function createContentCard(contentItemData) {
   const contentItem = document.createElement('div')
@@ -92,7 +112,10 @@ function initSearch() {
 
   if (requestText != undefined) {
     A_SearchInput.value = requestText
-    rerenderSearchedContent(requestText)
+
+    if (content) {
+      rerenderSearchedContent(requestText)
+    }
   } else {
     A_SearchInput.value = ''
   }
@@ -105,6 +128,8 @@ function initSearch() {
     } else {
       A_Button.classList.add('disabled')
     }
+
+    console.log(content)
   })
 
   A_SearchInput.addEventListener('keydown', (e) => {
@@ -124,24 +149,9 @@ function initSearch() {
   })
 }
 
-function getSearchRequest() {
-  const url = new URL(window.location.href)
-  const searchParams = new URLSearchParams(url.search)
-
-  if (searchParams.has('request')) {
-    return searchParams.get('request')
-  }
-}
-
-function setSearchRequest(requestText) {
-  const url = getPathFromUrl(window.location.href)
-  window.location.href = url + '?request=' + requestText
-}
-
-function getPathFromUrl(url) {
-  return url.split('?')[0]
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-  initSearch()
+  getPostTeasers().then((data) => {
+    content = data
+    initSearch()
+  })
 })
