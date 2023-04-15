@@ -18,8 +18,6 @@ function getPostTeasers() {
       .select({ maxRecords: 100 })
       .firstPage()
       .then((result) => {
-        console.log(result)
-
         result.forEach((record) => {
           content.push({
             id: record.id,
