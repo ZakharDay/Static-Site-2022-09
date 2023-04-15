@@ -24,33 +24,33 @@ function updateSelectData(option) {
   })
 }
 
-function updateContent() {
-  const contentItems = document.getElementsByClassName('O_ContentItem')
-  const selectedTags = []
+// function updateContent() {
+//   const contentItems = document.getElementsByClassName('O_ContentItem')
+//   const selectedTags = []
 
-  multiSelectOptions.forEach((item) => {
-    if (item.active) {
-      selectedTags.push(item.text)
-    }
-  })
+//   multiSelectOptions.forEach((item) => {
+//     if (item.active) {
+//       selectedTags.push(item.text)
+//     }
+//   })
 
-  console.log('selectedTags', selectedTags)
+//   console.log('selectedTags', selectedTags)
 
-  for (let i = 0; i < contentItems.length; i++) {
-    const contentItem = contentItems[i]
-    const contentItemTags = transformToLowercase(
-      contentItem.dataset.tags.split(',')
-    )
+//   for (let i = 0; i < contentItems.length; i++) {
+//     const contentItem = contentItems[i]
+//     const contentItemTags = transformToLowercase(
+//       contentItem.dataset.tags.split(',')
+//     )
 
-    contentItem.classList.remove('hidden')
+//     contentItem.classList.remove('hidden')
 
-    selectedTags.forEach((tag) => {
-      if (!contentItemTags.includes(tag)) {
-        contentItem.classList.add('hidden')
-      }
-    })
-  }
-}
+//     selectedTags.forEach((tag) => {
+//       if (!contentItemTags.includes(tag)) {
+//         contentItem.classList.add('hidden')
+//       }
+//     })
+//   }
+// }
 
 function createContentCard(contentItemData) {
   const contentItem = document.createElement('div')
@@ -134,7 +134,7 @@ function rerenderContent() {
           contentItemIds.push(contentItem.id)
         }
       })
-    } else if (requestText.length >= 3 && selectedTags.length >= 0) {
+    } else if (requestText.length >= 3 && selectedTags.length > 0) {
       selectedTags.forEach((tag) => {
         if (transformToLowercase(contentItem.tags).includes(tag)) {
           if (
@@ -544,13 +544,9 @@ function initSearch() {
 document.addEventListener('DOMContentLoaded', () => {
   if (document.body.classList.contains('index')) {
     initModal()
-
     initFilters()
-
     initMultiSelect()
-
     initSearch()
-
     initSelect()
   }
 })
