@@ -1,0 +1,22 @@
+@import 'stylesheets/reset.scss';
+@import 'stylesheets/fonts.scss';
+@import 'stylesheets/vars.scss';
+@import 'stylesheets/basics.scss';
+
+.A_Title {
+  color: red;
+}
+
+.A_Button {
+  padding: 10px;
+  background-color: black;
+  color: white;
+  cursor: pointer;
+  margin: 10px 0;
+  width: 100px;
+  text-align: center;
+}
+
+.A_Button.active {
+  background-color: red;
+}
