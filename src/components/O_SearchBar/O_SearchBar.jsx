@@ -9,6 +9,8 @@ export default class O_SearchBar extends React.Component {
   }
 
   render() {
+    console.log('Post Teasers', this.props.postTeasers)
+
     return (
       <div className="O_SearchBar">
         <M_SearchForm handleSearchSubmit={this.handleSearchSubmit} />
