@@ -1,7 +1,7 @@
 import './O_SearchBar.scss'
 import React from 'react'
 
-import A_Input from './../A_Input/A_Input.jsx'
+import M_SearchForm from './../M_SearchForm/M_SearchForm.jsx'
 
 export default class O_SearchBar extends React.Component {
   handleSearchSubmit = (value) => {
@@ -11,7 +11,7 @@ export default class O_SearchBar extends React.Component {
   render() {
     return (
       <div className="O_SearchBar">
-        <A_Input handleSearchSubmit={this.handleSearchSubmit} />
+        <M_SearchForm handleSearchSubmit={this.handleSearchSubmit} />
       </div>
     )
   }
