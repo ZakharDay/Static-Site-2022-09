@@ -13,31 +13,28 @@ export default class M_SearchForm extends React.Component {
     }
   }
 
-  handleInput = (value) => {
-    this.setState({
-      value
-    })
-  }
-
-  handleSearchSubmit = () => {
-    const { value } = this.state
-    const { handleSearchSubmit } = this.props
-    handleSearchSubmit(value)
-  }
-
   render() {
-    const { value } = this.state
+    const {
+      searchInputValue,
+      isSearchButtonDisabled,
+      handleSearchInput,
+      handleSearchSubmit
+    } = this.props
 
     return (
       <div className="M_SearchForm">
         <A_Input
-          value={value}
+          value={searchInputValue}
           placeholder="Search posts"
-          handleInput={this.handleInput}
-          handleSubmit={this.handleSearchSubmit}
+          handleInput={handleSearchInput}
+          handleSubmit={handleSearchSubmit}
         />
 
-        <A_Button text="Search" handleClick={this.handleSearchSubmit} />
+        <A_Button
+          text="Search"
+          disabled={isSearchButtonDisabled}
+          handleClick={handleSearchSubmit}
+        />
       </div>
     )
   }

@@ -1,12 +1,18 @@
 import './A_Button.scss'
+import classnames from 'classnames'
 import React from 'react'
 
 export default class A_Button extends React.Component {
   render() {
-    const { text, handleClick } = this.props
+    const { text, disabled, handleClick } = this.props
+
+    const classes = classnames({
+      A_Button: true,
+      disabled: disabled
+    })
 
     return (
-      <div className="A_Button" onClick={handleClick}>
+      <div className={classes} onClick={handleClick}>
         {text}
       </div>
     )

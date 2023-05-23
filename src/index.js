@@ -377,7 +377,7 @@ function initMultiSelect() {
   })
 
   document.body.addEventListener('click', (e) => {
-    console.log(multiSelectOptions)
+    console.log('multiSelectOptions', multiSelectOptions)
 
     if (
       !e.target.classList.contains('A_MultiSelectInput') &&
