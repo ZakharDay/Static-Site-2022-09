@@ -1,9 +1,21 @@
 .M_PostTeaser {
-  margin: 10px;
+  width: 280px;
   color: black;
   text-decoration: none;
 
+  .C_PostTeaserTags {
+    display: flex;
+    gap: 8px;
+    margin: 10px 0;
+  }
+
   .A_Text {
+    &.tag {
+      padding: 4px;
+      background-color: grey;
+      color: white;
+    }
+
     &.h3 {
       font-weight: bold;
     }
@@ -11,5 +23,9 @@
     &.p {
       margin-top: 4px;
     }
+  }
+
+  .A_Image {
+    width: 100%;
   }
 }
