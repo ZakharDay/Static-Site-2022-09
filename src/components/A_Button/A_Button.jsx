@@ -4,11 +4,12 @@ import React from 'react'
 
 export default class A_Button extends React.Component {
   render() {
-    const { text, disabled, handleClick } = this.props
+    const { text, type, disabled, handleClick } = this.props
 
     const classes = classnames({
       A_Button: true,
-      disabled: disabled
+      disabled: disabled,
+      [`${type}`]: true
     })
 
     return (

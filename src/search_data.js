@@ -19,12 +19,14 @@ function getPostTeasers() {
       .firstPage()
       .then((result) => {
         result.forEach((record) => {
+          console.log(record)
           content.push({
             id: record.id,
             tags: record.fields['Tags'],
             image: record.fields['Image'],
             title: record.fields['Title'],
-            description: record.fields['Description']
+            description: record.fields['Description'],
+            url: record.fields['Url']
           })
         })
 
