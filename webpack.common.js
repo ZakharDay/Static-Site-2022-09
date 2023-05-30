@@ -14,7 +14,7 @@ module.exports = {
     jsbasics: './src/jsbasics.js',
     adcgame: './src/adcgame.js',
     ui: './src/ui.js',
-    search: './src/search.js',
+    'search-vanilla-js': './src/search-vanilla-js.js',
     reactBasics: './src/react-basics.jsx',
     searchBar: './src/searchbar.jsx'
   },
@@ -111,9 +111,9 @@ module.exports = {
     }),
 
     new HtmlWebpackPlugin({
-      template: './src/search.html',
-      filename: './search.html',
-      chunks: ['search', 'searchBar']
+      template: './src/search-vanilla-js.html',
+      filename: './search-vanilla-js.html',
+      chunks: ['search-vanilla-js', 'searchBar']
     }),
 
     new HtmlWebpackPlugin({
