@@ -5,28 +5,6 @@ import { getPostTeasers } from '../../search_data.js'
 import O_SearchBar from '../O_SearchBar/O_SearchBar.jsx'
 import A_Link from '../A_Link/A_Link.jsx'
 
-const addressPart = ':8080/'
-// const addressPart = '.adc.ac/'
-
-const menu = [
-  {
-    text: 'Element 1',
-    url: 'spaceobjects.html'
-  },
-  {
-    text: 'Element 2',
-    url: 'spaceobjects/moon.html'
-  },
-  {
-    text: 'Element 3',
-    url: 'spaceships.html'
-  },
-  {
-    text: 'Element 4',
-    url: 'spaceships/buran.html'
-  }
-]
-
 export default class S_MenuBar extends React.Component {
   constructor(props) {
     super(props)
@@ -51,6 +29,7 @@ export default class S_MenuBar extends React.Component {
   }
 
   getPathFromUrl = (url) => {
+    const { addressPart } = this.props
     return url.split(addressPart)[0]
   }
 
@@ -70,6 +49,7 @@ export default class S_MenuBar extends React.Component {
   }
 
   handleSearchSubmit = () => {
+    const { addressPart } = this.props
     const { searchInputValue } = this.state
 
     if (searchInputValue.length >= 3) {
@@ -81,13 +61,14 @@ export default class S_MenuBar extends React.Component {
   }
 
   render() {
+    const { addressPart, menuItems } = this.props
     const { postTeasers, searchInputValue, isSearchButtonDisabled } = this.state
     const currentURL = window.location.href
     const homeURL = this.getPathFromUrl(currentURL) + addressPart
 
     const menuElements = []
 
-    menu.forEach((menuItem, i) => {
+    menuItems.forEach((menuItem, i) => {
       const linkURL = homeURL + menuItem.url
 
       menuElements.push(
