@@ -1,4 +1,3 @@
-import './S_MenuBar.scss'
 import React from 'react'
 import { getPostTeasers } from '../../search_data.js'
 
@@ -49,22 +48,21 @@ export default class S_MenuBar extends React.Component {
   }
 
   handleSearchSubmit = () => {
-    const { addressPart } = this.props
+    const { prerender, homeURL } = this.props
     const { searchInputValue } = this.state
 
-    if (searchInputValue.length >= 3) {
-      const url = this.getPathFromUrl(window.location.href)
-
-      window.location.href =
-        url + addressPart + 'search.html?request=' + searchInputValue
+    if (!prerender) {
+      if (searchInputValue.length >= 3) {
+        window.location.href =
+          homeURL + 'search.html?request=' + searchInputValue
+      }
     }
   }
 
   render() {
-    const { addressPart, menuItems } = this.props
+    const { prerender, homeURL, menuItems } = this.props
     const { postTeasers, searchInputValue, isSearchButtonDisabled } = this.state
-    const currentURL = window.location.href
-    const homeURL = this.getPathFromUrl(currentURL) + addressPart
+    const currentURL = !prerender ? window.location.href : ''
 
     const menuElements = []
 

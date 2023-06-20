@@ -2,13 +2,23 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackPartialsPlugin = require('html-webpack-partials-plugin')
+const StaticSourceData = require('static-source-data')
+const SitemapPlugin = require('sitemap-webpack-plugin').default
 
 const webpack = require('webpack')
 const path = require('path')
 
+const paths = [
+  '/paceobjects.html',
+  '/paceobjects/moon.html',
+  '/paceships.html',
+  '/paceships/buran.html'
+]
+
 module.exports = {
   entry: {
-    index: './src/index.js',
+    styles: './src/styles.js',
+    index: './src/index.jsx',
     htmlcss: './src/htmlcss.js',
     dictionary: './src/dictionary.js',
     jsbasics: './src/jsbasics.js',
@@ -76,14 +86,7 @@ module.exports = {
         type: 'asset/source'
       },
       {
-        test: /\.png/,
-        type: 'asset/resource',
-        generator: {
-          filename: 'images/[hash][ext][query]'
-        }
-      },
-      {
-        test: /\.svg/,
+        test: /\.(png|svg|jpg|jpeg|gif)/,
         type: 'asset/resource',
         generator: {
           filename: 'images/[hash][ext][query]'
@@ -99,28 +102,70 @@ module.exports = {
     ]
   },
   plugins: [
+    new SitemapPlugin({ base: 'https://adc.ac', paths }),
+
     new MiniCssExtractPlugin({
       filename: '[name].[contenthash].css',
       chunkFilename: '[id].[contenthash].css'
     }),
 
+    new StaticSourceData({
+      indexData: {
+        url: 'https://api.airtable.com/v0/appx0vzpYoEu58TMz/Homepage',
+        headers: {
+          Authorization:
+            'Bearer patgMILzkAoLTAAWw.247ac2e7c0f0395d7bfc96ff802bb6418bba9534953314a257508be68055a5a4'
+        }
+      }
+    }),
+
     // Index
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './src/index.ejs',
       filename: './index.html',
-      chunks: ['index', 'menubar']
+      chunks: ['styles', 'index', 'menubar']
     }),
+
+    // Articles
+    new HtmlWebpackPlugin({
+      template: './src/spaceships.ejs',
+      filename: './spaceships.html',
+      chunks: ['styles', 'menubar']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/spaceobjects.ejs',
+      filename: './spaceobjects.html',
+      chunks: ['styles', 'menubar']
+    }),
+
+    // Article
+    new HtmlWebpackPlugin({
+      template: './src/spaceships/buran.ejs',
+      filename: './spaceships/buran.html',
+      chunks: ['styles', 'menubar']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/spaceobjects/moon.ejs',
+      filename: './spaceobjects/moon.html',
+      chunks: ['styles', 'menubar']
+    }),
+
+    new HtmlWebpackPlugin({
+      template: './src/search.ejs',
+      filename: './search.html',
+      chunks: ['styles', 'search', 'menubar']
+    }),
+
+    //
+    //
+    //
 
     new HtmlWebpackPlugin({
       template: './src/search-vanilla-js.html',
       filename: './search-vanilla-js.html',
-      chunks: ['search-vanilla-js', 'menubar']
-    }),
-
-    new HtmlWebpackPlugin({
-      template: './src/search.html',
-      filename: './search.html',
-      chunks: ['search', 'menubar']
+      chunks: ['search-vanilla-js']
     }),
 
     new HtmlWebpackPlugin({
@@ -156,7 +201,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/ui.html',
       filename: './ui.html',
-      chunks: ['ui']
+      chunks: ['styles', 'ui']
     }),
 
     new HtmlWebpackPlugin({
@@ -181,32 +226,6 @@ module.exports = {
       template: './src/adcgame.html',
       filename: './adcgame.html',
       chunks: ['adcgame']
-    }),
-
-    // Articles
-    new HtmlWebpackPlugin({
-      template: './src/spaceships.html',
-      filename: './spaceships.html',
-      chunks: ['index', 'menubar']
-    }),
-
-    new HtmlWebpackPlugin({
-      template: './src/spaceobjects.html',
-      filename: './spaceobjects.html',
-      chunks: ['index', 'menubar']
-    }),
-
-    // Article
-    new HtmlWebpackPlugin({
-      template: './src/spaceships/buran.html',
-      filename: './spaceships/buran.html',
-      chunks: ['index', 'menubar']
-    }),
-
-    new HtmlWebpackPlugin({
-      template: './src/spaceobjects/moon.html',
-      filename: './spaceobjects/moon.html',
-      chunks: ['index', 'menubar']
     }),
 
     // Partials
