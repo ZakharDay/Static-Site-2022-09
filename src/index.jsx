@@ -18,6 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
       categories
     }
 
-    root.render(<S_LandingContent {...props} />)
+    root.render(<S_LandingContent styles={styles} {...props} />)
   })
 })
