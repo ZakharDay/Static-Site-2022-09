@@ -7,7 +7,7 @@ const SIGN_OUT_URL = 'http://localhost:3000/api/v1/sign_out.json'
 const PINS_INDEX_URL = 'http://localhost:3000/api/v1/pins.json'
 
 function initApp() {
-  if (Cookies.get('jti') == undefined) {
+  if (Cookies.get('jwt') == undefined) {
     switchToSignIn()
   } else {
     switchToSignedIn()
@@ -51,7 +51,7 @@ function initSingInForm() {
         console.log('RESPONSE', response)
 
         response.json().then((data) => {
-          Cookies.set('jti', data.data.user.jti)
+          Cookies.set('jwt', data.jwt)
           switchToSignedIn()
         })
       })
@@ -77,7 +77,7 @@ function initSingUpForm() {
         console.log('RESPONSE', response)
 
         response.json().then((data) => {
-          Cookies.set('jti', data.data.user.jti)
+          Cookies.set('jwt', data.jwt)
           switchToSignedIn()
         })
       })
@@ -96,7 +96,7 @@ function initPinForm() {
     const formData = new FormData(form)
 
     fetch(PINS_INDEX_URL, {
-      headers: { Authorization: Cookies.get('jti') },
+      headers: { Authorization: Cookies.get('jwt') },
       method: 'POST',
       body: formData
     })
@@ -164,14 +164,14 @@ function initSignOutLink() {
     e.preventDefault()
 
     fetch(SIGN_OUT_URL, {
-      headers: { Authorization: Cookies.get('jti') },
+      headers: { Authorization: Cookies.get('jwt') },
       method: 'POST',
       body: {}
     })
       .then((response) => {
         console.log('RESPONSE', response)
 
-        Cookies.remove('jti')
+        Cookies.remove('jwt')
         switchToSignIn()
       })
       .catch((error) => {
